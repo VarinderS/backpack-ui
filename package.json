@@ -8,6 +8,7 @@
     "build": "rm -rf dist && mkdir -p dist/components && babel -d dist src",
     "ci": "rm -rf dist && mkdir -p dist/components && babel --watch -d dist src",
     "test:ci": "NODE_ENV=test mocha --reporter spec --compilers js:babel-register --watch --recursive spec/",
+    "lint": "./node_modules/.bin/eslint src --ext .js,.jsx",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "gh-pages": "npm run build-storybook -- -o _gh-pages && gh-pages -d _gh-pages && rm -rf _gh-pages",
@@ -22,6 +23,9 @@
     "check-changelog": "expr $(git status --porcelain 2>/dev/null| grep \"^\\s*M.*CHANGELOG.md\" | wc -l) >/dev/null || (echo 'Please edit CHANGELOG.md' && exit 1)",
     "check-only-changelog-changed": "(expr $(git status --porcelain 2>/dev/null| grep -v \"CHANGELOG.md\" | wc -l) >/dev/null && echo 'Only CHANGELOG.md may have uncommitted changes' && exit 1) || exit 0"
   },
+  "pre-commit": [
+    "lint"
+  ],
   "author": "Lonely Planet",
   "license": "ISC",
   "dependencies": {
@@ -76,6 +80,7 @@
     "eslint-plugin-react": "^6.3.0",
     "gh-pages": "^0.12.0",
     "mocha": "^3.0.2",
+    "pre-commit": "^1.2.2",
     "react-addons-shallow-compare": "^15.0.2",
     "sinon": "^1.17.6"
   }
